@@ -1,12 +1,25 @@
+from abc import ABC
+
 import pygame
 
+from entity import Entity
 
-class CreatureRenderer:
-    def __init__(self, creature):
-        self.creature = creature
 
+class Renderer(ABC):
+    def __init__(self, entity: Entity) -> None:
+        self.entity = entity
+
+    def draw(self, screen: pygame.Surface): ...
+
+
+class CreatureRenderer(Renderer):
     def draw(self, screen):
-        c = self.creature
+        c = self.entity
+        from creature import Creature
+
+        assert isinstance(c, Creature), (
+            f"Cannot render {c.__qualname__} with {self.__qualname__}"
+        )
         # Trail
         for i, pos in enumerate(c.trail):
             alpha = int(255 * (i / len(c.trail)))
@@ -31,12 +44,14 @@ class CreatureRenderer:
         pygame.draw.circle(screen, c.color, (int(c.x), int(c.y)), c.radius)
 
 
-class FoodRenderer:
-    def __init__(self, food):
-        self.food = food
-
+class FoodRenderer(Renderer):
     def draw(self, screen):
-        f = self.food
+        f = self.entity
+        from food import Food
+
+        assert isinstance(f, Food), (
+            f"Cannot render {f.__qualname__} with {self.__qualname__}"
+        )
         glow = pygame.Surface((f.radius * 6, f.radius * 6), pygame.SRCALPHA)
         pygame.draw.circle(
             glow, (0, 255, 0, 120), (f.radius * 3, f.radius * 3), f.radius * 2

@@ -7,11 +7,11 @@ from food import Food
 
 class Environment:
     def __init__(self):
-        self.creatures = [
+        self.creatures: list[Creature] = [
             Creature(random.randint(50, WIDTH - 50), random.randint(50, HEIGHT - 50))
             for _ in range(NUM_CREATURES)
         ]
-        self.foods = [Food() for _ in range(NUM_FOOD)]
+        self.foods: list[Food] = [Food() for _ in range(NUM_FOOD)]
 
     def update(self):
         """Advance simulation by one tick"""
