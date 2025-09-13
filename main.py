@@ -1,8 +1,7 @@
 import pygame
 
 from config import FPS, HEIGHT, WIDTH
-from environment import Environment
-from renderers import CreatureRenderer, FoodRenderer
+from environment.environment import Environment
 
 
 def main():
@@ -14,6 +13,8 @@ def main():
 
     running = True
     while running:
+        env.TICKS = clock.get_time()
+
         screen.fill((20, 20, 30))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -22,10 +23,8 @@ def main():
         env.update()
 
         # Draw
-        for c in env.creatures:
-            CreatureRenderer(c).draw(screen)
-        for f in env.foods:
-            FoodRenderer(f).draw(screen)
+        for entity in env.creatures + env.foods:
+            entity.draw(screen)
 
         pygame.display.flip()
         clock.tick(FPS)

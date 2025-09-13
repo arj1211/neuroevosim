@@ -1,3 +1,5 @@
+![A vibrant, abstract illustration depicting a neural network or complex biological system with interconnected nodes and glowing pathways, set against a dark background.](assets/cover.png)
+
 # NeuroEvoSim
 Evolving artificial creatures in a simulated world
 
